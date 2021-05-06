@@ -6,6 +6,5 @@ import '@/assets/scss/main.scss'
 import('@api-mock')
 
 createApp(App)
-  .use(store)
   .use(router)
   .mount('#app')
