@@ -31,7 +31,7 @@ const actions = {
 
 const getters = {
   user (state) {
-    return state.user || {}
+    return state.user
   },
   userName (state) {
     return state.user?.name

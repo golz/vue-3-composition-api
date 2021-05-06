@@ -11,7 +11,7 @@
       </div>
 
       <TaskList
-        :tasks="filteredSubscriptionTasks"/>
+        :tasks="filteredBlimartTasks"/>
 
       <CreateTaskForm
         @create-task="createTask" />
@@ -34,7 +34,7 @@ export default {
     }
   },
   computed: {
-    filteredSubscriptionTasks () {
+    filteredBlimartTasks () {
       return this.tasks.filter(t => t.name.includes("BM-"))
     }
   },
@@ -46,7 +46,6 @@ export default {
         description: description
       }
       this.tasks.push(task)
-      console.log(this.tasks)
     }
   }
 }
