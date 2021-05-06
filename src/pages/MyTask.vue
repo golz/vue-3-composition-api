@@ -11,7 +11,7 @@
       </div>
 
       <TaskList
-        :tasks="filteredSubscriptionTasks"/>
+        :tasks="filteredBlimartTasks"/>
 
       <CreateTaskForm
         @create-task="createTask" />
@@ -23,31 +23,56 @@
 import TaskList from '@/components/TaskList.vue'
 import CreateTaskForm from '@/components/CreateTaskForm.vue'
 
+import { ref, computed } from 'vue'
+
 export default {
   components: {
     TaskList,
     CreateTaskForm
   },
-  data () {
-    return {
-      tasks: []
-    }
-  },
-  computed: {
-    filteredSubscriptionTasks () {
-      return this.tasks.filter(t => t.name.includes("BM-"))
-    }
-  },
-  methods: {
-    createTask ({ name, description }) {
+  setup () {
+    const tasks = ref([])
+
+    const filteredBlimartTasks = computed(() => {
+      return tasks.value.filter(t => t.name.includes("BM-"))
+    })
+
+    function createTask ({ name, description }) {
       const task = {
         date: new Date().toLocaleDateString(),
         name: name,
         description: description
       }
-      this.tasks.push(task)
-      console.log(this.tasks)
+      // this.tasks.push(task)
+      tasks.value.push(task)
+    }
+
+    return {
+      // tasks, // or userTasks: tasks
+      filteredBlimartTasks,
+      createTask
     }
   }
+  // data () {
+  //   return {
+  //     tasks: []
+  //   }
+  // },
+  // computed: {
+  //   filteredSubscriptionTasks () {
+  //     return this.tasks.filter(t => t.name.includes("BM-"))
+  //   }
+  // },
+  // methods: {
+  //   createTask ({ name, description }) {
+  //     const task = {
+  //       date: new Date().toLocaleDateString(),
+  //       name: name,
+  //       description: description
+  //     }
+  //     this.tasks.push(task)
+  //     console.log(this.tasks)
+  //   }
+  // }
 }
 </script>

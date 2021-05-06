@@ -34,35 +34,73 @@
 </template>
 
 <script>
+import { ref, watch } from 'vue'
+
 export default {
-  data () {
-    return {
-      name: '',
-      description: '',
-      valid: true,
-      error: ''
-    }
-  },
-  methods: {
-    createTask () {
-      this.valid = true
-      if (this.name === '' || this.description === '') {
-        this.valid = false
+  setup (props, { emit }) {
+    const name = ref('')
+    const description = ref('')
+    const valid = ref(true)
+    const error = ref('')
+
+    watch(valid, (value) => {
+      if (!value) error.value = 'Ada error gan'
+      else error.value = ''
+    })
+
+    function createTask () {
+      valid.value = true
+      if (name.value === '' || description.value === '') {
+        valid.value = false
         return
       }
-      this.$emit('create-task', { name: this.name, description: this.description })
+      // this.$emit('create-task', { name: this.name, description: this.description })
+      emit('create-task', { name: name.value, description: description.value })
       this.reset()
-    },
-    reset () {
-      this.name = ''
-      this.description = ''
     }
-  },
-  watch: {
-    valid (valid) {
-      if (!valid) this.error = 'Ada error gan'
-      else this.error = ''
+    function reset () {
+      name.value = ''
+      description.value = ''
+    }
+
+    return {
+      name,
+      description,
+      valid,
+      error,
+      // method
+      createTask,
+      reset
     }
   }
+  // data () {
+  //   return {
+  //     name: '',
+  //     description: '',
+  //     valid: true,
+  //     error: ''
+  //   }
+  // },
+  // methods: {
+  //   createTask () {
+  //     this.valid = true
+  //     if (this.name === '' || this.description === '') {
+  //       this.valid = false
+  //       return
+  //     }
+  //     this.$emit('create-task', { name: this.name, description: this.description })
+  //     this.reset()
+  //   },
+  //   reset () {
+  //     this.name = ''
+  //     this.description = ''
+  //   }
+  // },
+  // watch: {
+  //   valid (valid) {
+  //     if (!valid) this.error = 'Ada error gan'
+  //     else this.error = ''
+  //   }
+  // }
 }
 </script>
